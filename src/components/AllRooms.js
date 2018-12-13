@@ -8,7 +8,7 @@ import Toilet from './choiceOfOptions/Toilet'
 import Room from './choiceOfOptions/Room'
 
 const createArray = (N) => Array.from({length: N}, (v, k) => k+1);
-const options = {
+const roomOptions = {
     control_temp: 0,
     management_light: 0,
     management_socket: 0,
@@ -26,25 +26,24 @@ class AllRooms extends Component {
 
         this.state = {
             counter: 0,
-            allroomsIs: true,
+            isDisplayForm: true,
             flatInfo:{  
                 room_count: 1,
                 toilet_count: 1,
                 water_count: 1,
             }
-            
         }
         this.setRoomsCount = this.setRoomsCount.bind(this); 
         this.getFormOptions = this.getFormOptions.bind(this); 
         this.nextForm = this.nextForm.bind(this); 
-        this.sendData = this.sendData.bind(this); 
+        this.handlerAPI = this.handlerAPI.bind(this); 
     }
 
-    sendData(){
-        this.setState({allroomsIs: null})
+    handlerAPI(){
+        this.setState({isDisplayForm: null})
 
         var data = new FormData();
-        data.append( "json", JSON.stringify( this.state ) );
+        data.append( "json", JSON.stringify( this.state.flatInfo ) );
 
         fetch("https://pro100.media/api/calc/frame/",
         {
@@ -55,70 +54,73 @@ class AllRooms extends Component {
         .then( res =>  this.setState({response: res.body}) )
     }
 
-    // checkRoomInStorage(e, typeOfRoom){
-    //     if(this.state.hasOwnProperty(typeOfRoom)){
-    //         // const info_room = {...this.state[typeOfRoom]};
-    //         let data = [...this.state.data];
-    //         data[0][e.target.name] = 1;
-    //         this.setState({ data });
-    //         // this.setState({ [typeOfRoom]: info_room });
-    //     }else{
-    //         options[e.target.name] = 1;
-    //         this.setState({ [typeOfRoom]: options })
-    //     }
-    // }
-    checkRoomInStorage(e, typeOfRoom){
+    checkRoomInStorage(typeOfRoom, managementOption){
 
         const { flatInfo } = this.state;
         
         if(flatInfo.hasOwnProperty(typeOfRoom)){
 
-            // let flatInfo = [...this.state.flatInfo];
-            // flatInfo[0][typeOfRoom][e.target.name] = 1;
             this.setState({ 
-                ...this.state.flatInfo, 
-                [e.target.name]: e.target.value 
+                flatInfo:{
+                    ...flatInfo, 
+                    [typeOfRoom]: {
+                        
+                        ...typeOfRoom,
+                        [managementOption]: 1,
+                    }     
+                }
             });
 
         }else{
-            
-            options[e.target.name] = 1;
-            this.setState({ [typeOfRoom]: options })
+            let copyRoomOptions = {...roomOptions};
+            copyRoomOptions[managementOption] = 1;
+
+            this.setState({ 
+                flatInfo:{
+                    ...flatInfo,
+                    [typeOfRoom]: copyRoomOptions, 
+                } 
+            })
         }
     }
     
-    getFormOptions(e, typeOfRoom){
+    getFormOptions(e, typeOfRoom, managementOption){
 
         if (e.target.checked) {
-            this.checkRoomInStorage(e, typeOfRoom);
+            this.checkRoomInStorage(typeOfRoom, managementOption);
            
         } else {
-            const info_room = {...this.state[typeOfRoom]};
-            info_room[e.target.name] = 0;
-            this.setState({ [typeOfRoom]: info_room });
+
+            this.setState({ 
+                flatInfo:{
+
+                    ...this.state.flatInfo,
+                    [typeOfRoom]: {
+                        ...typeOfRoom,
+                        [managementOption]: 0,
+                    }
+                } 
+            })
         }
-        //   console.log(this.state)
     }
 
-    setRoomsCount(e) {
+    setRoomsCount(e, typeCount) {
         this.setState({ 
 
             flatInfo: {
                 ...this.state.flatInfo, 
-                [e.target.roomsCount]: e.target.value
+                [typeCount]: e.target.value,
             } 
         });
     }
 
     nextForm(){
-        let counter = this.state.counter;
-        counter++;
-        this.setState({counter});
+        this.setState({ counter: this.state.counter + 1 });
     }
 
     render() {
 
-        const {room_count, toilet_count} = this.state;
+        const {room_count, toilet_count} = this.state.flatInfo;
 
         const entryNumbers = (
             <form onSubmit={this.handlSubmit}>
@@ -149,7 +151,7 @@ class AllRooms extends Component {
             if(array[array.length-1] === item) {
                 return <Room
                 key={item} 
-                nextRoom = {this.sendData}
+                nextRoom = {this.handlerAPI}
                 getOptions={this.getFormOptions}
                 number={item} />
             }
@@ -162,13 +164,13 @@ class AllRooms extends Component {
 
         const hall = (<Hall getOptions={this.getFormOptions} nextRoom={this.nextForm} />);
         const kitchen = (<Kitchen getOptions={this.getFormOptions} nextRoom={this.nextForm}/>);
-        const allRooms = [entryNumbers, kitchen, hall,...toilets,...rooms];
+        const allFormComponents = [entryNumbers, kitchen, hall,...toilets,...rooms];
 
         return (
             <div className="wrapper">
                 <div className="main">
 
-                { this.state.allroomsIs && allRooms[this.state.counter] }
+                { this.state.isDisplayForm && allFormComponents[this.state.counter] }
 
                 {  
                     this.state.response && 
