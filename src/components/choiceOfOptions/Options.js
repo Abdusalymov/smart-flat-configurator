@@ -10,14 +10,14 @@ const Options = ({getOptions, componentName})=>
                 <input className="form-check-input" type="checkbox" id="inlineCheckbox1" 
                 value="option1" 
                 onChange={(e)=>getOptions(e, componentName)} 
-                name="control_temp"/>
+                optionName="control_temp"/>
                 <label className="form-check-label" htmlFor="inlineCheckbox1">Теплый пол</label>
             </div>
 
             <div className="form-check form-check-inline">
                 <input className="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2"
                 onChange={(e)=>getOptions(e,componentName)} 
-                name="control_temp2"/>
+                optionName="control_temp2"/>
                 <label className="form-check-label" htmlFor="inlineCheckbox2">Отопление</label>
             </div>
 
@@ -26,7 +26,7 @@ const Options = ({getOptions, componentName})=>
         <div className="form-check">
             <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" 
             onChange={(e)=>getOptions(e, componentName)} 
-            name="management_light"/>
+            optionName="management_light"/>
             <label className="form-check-label" htmlFor="defaultCheck1">
             Управление освещением
             </label>
@@ -35,7 +35,7 @@ const Options = ({getOptions, componentName})=>
         <div className="form-check">
             <input className="form-check-input" type="checkbox" value="" id="defaultCheck2" 
             onChange={(e)=>getOptions(e,componentName)} 
-            name="management_socket"/>
+            optionName="management_socket"/>
             <label className="form-check-label" htmlFor="defaultCheck2">
             Управление розетками
             </label>
@@ -44,7 +44,7 @@ const Options = ({getOptions, componentName})=>
         <div className="form-check">
             <input className="form-check-input" type="checkbox" value="" id="defaultCheck3" 
             onChange={(e)=>getOptions(e,componentName)} 
-            name="management_curtain"/>
+            optionName="management_curtain"/>
             <label className="form-check-label" htmlFor="defaultCheck3">
             Управление занавесками
             </label>
@@ -53,7 +53,7 @@ const Options = ({getOptions, componentName})=>
         <div className="form-check">
             <input className="form-check-input" type="checkbox" value="" id="defaultCheck4" 
             onChange={(e)=>getOptions(e,componentName)} 
-            name="control_multi"/>
+            optionName="control_multi"/>
             <label className="form-check-label" htmlFor="defaultCheck4">
             Мониторинг температуры/движения/влажности
             </label>
@@ -62,7 +62,7 @@ const Options = ({getOptions, componentName})=>
         <div className="form-check">
             <input className="form-check-input" type="checkbox" value="" id="defaultCheck5" 
             onChange={(e)=>getOptions(e,componentName)} 
-            name="control_air"/>
+            optionName="control_air"/>
             <label className="form-check-label" htmlFor="defaultCheck5">
             Мониторинг качества воздуха
             </label>
@@ -71,7 +71,7 @@ const Options = ({getOptions, componentName})=>
         <div className="form-check">
             <input className="form-check-input" type="checkbox" value="" id="defaultCheck6" 
             onChange={(e)=>getOptions(e,componentName)} 
-            name="management_water"/>
+           optionName="management_water"/>
             <label className="form-check-label" htmlFor="defaultCheck6">
             Управление водой(перекрытие  в случае аварии)
             </label>
@@ -80,7 +80,7 @@ const Options = ({getOptions, componentName})=>
         <div className="form-check">
             <input className="form-check-input" type="checkbox" value="" id="defaultCheck7" 
             onChange={(e)=>getOptions(e,componentName)} 
-            name="control_water"/>
+           optionName="control_water"/>
             <label className="form-check-label" htmlFor="defaultCheck7">
             Контроль протечки
             </label>

@@ -27,15 +27,15 @@ class AllRooms extends Component {
         this.state = {
             counter: 0,
             allroomsIs: true,
-            data:[
-                {   room_count: 1,
-                    toilet_count: 1,
-                    water_count: 1,
-                }
-            ]
+            flatInfo:{  
+                room_count: 1,
+                toilet_count: 1,
+                water_count: 1,
+            }
+            
         }
-        this.setQuantityRooms = this.setQuantityRooms.bind(this); 
-        this.getOptions = this.getOptions.bind(this); 
+        this.setRoomsCount = this.setRoomsCount.bind(this); 
+        this.getFormOptions = this.getFormOptions.bind(this); 
         this.nextForm = this.nextForm.bind(this); 
         this.sendData = this.sendData.bind(this); 
     }
@@ -55,49 +55,59 @@ class AllRooms extends Component {
         .then( res =>  this.setState({response: res.body}) )
     }
 
-    // checkInfoRoom(e, roomName){
-    //     if(this.state.hasOwnProperty(roomName)){
-    //         // const info_room = {...this.state[roomName]};
+    // checkRoomInStorage(e, typeOfRoom){
+    //     if(this.state.hasOwnProperty(typeOfRoom)){
+    //         // const info_room = {...this.state[typeOfRoom]};
     //         let data = [...this.state.data];
     //         data[0][e.target.name] = 1;
     //         this.setState({ data });
-    //         // this.setState({ [roomName]: info_room });
+    //         // this.setState({ [typeOfRoom]: info_room });
     //     }else{
     //         options[e.target.name] = 1;
-    //         this.setState({ [roomName]: options })
+    //         this.setState({ [typeOfRoom]: options })
     //     }
     // }
-    checkInfoRoom(e, roomName){
-        if(this.state.data[0].hasOwnProperty(roomName)){
+    checkRoomInStorage(e, typeOfRoom){
 
-            let data = [...this.state.data];
-            data[0][roomName][e.target.name] = 1;
-            this.setState({ data });
+        const { flatInfo } = this.state;
+        
+        if(flatInfo.hasOwnProperty(typeOfRoom)){
+
+            // let flatInfo = [...this.state.flatInfo];
+            // flatInfo[0][typeOfRoom][e.target.name] = 1;
+            this.setState({ 
+                ...this.state.flatInfo, 
+                [e.target.name]: e.target.value 
+            });
 
         }else{
             
             options[e.target.name] = 1;
-            this.setState({ [roomName]: options })
+            this.setState({ [typeOfRoom]: options })
         }
     }
     
-    getOptions(e, roomName){
+    getFormOptions(e, typeOfRoom){
 
         if (e.target.checked) {
-            this.checkInfoRoom(e, roomName);
+            this.checkRoomInStorage(e, typeOfRoom);
            
         } else {
-            const info_room = {...this.state[roomName]};
+            const info_room = {...this.state[typeOfRoom]};
             info_room[e.target.name] = 0;
-            this.setState({ [roomName]: info_room });
+            this.setState({ [typeOfRoom]: info_room });
         }
         //   console.log(this.state)
     }
 
-    setQuantityRooms(e) {
-        let data = [...this.state.data];
-        data[0][e.target.name] = e.target.value;
-        this.setState({ data });
+    setRoomsCount(e) {
+        this.setState({ 
+
+            flatInfo: {
+                ...this.state.flatInfo, 
+                [e.target.roomsCount]: e.target.value
+            } 
+        });
     }
 
     nextForm(){
@@ -113,13 +123,13 @@ class AllRooms extends Component {
         const entryNumbers = (
             <form onSubmit={this.handlSubmit}>
                 <NumberRooms
-                    onChange={this.setQuantityRooms}
+                    onChange={this.setRoomsCount}
                 />
                 <NumberBathrooms
-                    onChange={this.setQuantityRooms}
+                    onChange={this.setRoomsCount}
                 />
                 <NumberWaterInlets
-                    onChange={this.setQuantityRooms}
+                    onChange={this.setRoomsCount}
                 />
                 <button onClick={this.nextForm}>
                     Сохранить
@@ -131,7 +141,7 @@ class AllRooms extends Component {
             return <Toilet
             key={item} 
             nextRoom = {this.nextForm}
-            getOptions={this.getOptions}
+            getOptions={this.getFormOptions}
             number={item} />
         });
 
@@ -140,18 +150,18 @@ class AllRooms extends Component {
                 return <Room
                 key={item} 
                 nextRoom = {this.sendData}
-                getOptions={this.getOptions}
+                getOptions={this.getFormOptions}
                 number={item} />
             }
             return <Room
             key={item} 
             nextRoom = {this.nextForm}
-            getOptions={this.getOptions}
+            getOptions={this.getFormOptions}
             number={item} />
         });
 
-        const hall = (<Hall getOptions={this.getOptions} nextRoom={this.nextForm} />);
-        const kitchen = (<Kitchen getOptions={this.getOptions} nextRoom={this.nextForm}/>);
+        const hall = (<Hall getOptions={this.getFormOptions} nextRoom={this.nextForm} />);
+        const kitchen = (<Kitchen getOptions={this.getFormOptions} nextRoom={this.nextForm}/>);
         const allRooms = [entryNumbers, kitchen, hall,...toilets,...rooms];
 
         return (

@@ -6,7 +6,7 @@ const NumberWaterInlets = ({onChange})=>
         <select 
             className="form-control" 
             id="exampleFormControlSelect1" 
-            name="water_count"
+            roomsCount="water_count"
             onChange={onChange}
             >
 

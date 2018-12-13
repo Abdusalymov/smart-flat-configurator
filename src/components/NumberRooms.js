@@ -6,7 +6,7 @@ const NumberRooms = ({onChange})=>
         <select 
             className="form-control" 
             id="exampleFormControlSelect1"
-            name="room_count"
+            roomsCount="room_count"
             onChange={onChange}
             >
             <option>1</option>
