@@ -1,5 +1,5 @@
 import React from 'react';
-import Options from '../choiceOfOptions/Options';
+import Options from '../Options';
 
 const Hall = ({nextRoom, getOptions})=>
     <div>

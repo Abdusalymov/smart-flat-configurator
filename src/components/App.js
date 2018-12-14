@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import NumberRooms from './NumberRooms'
 import NumberBathrooms from './NumberBathrooms'
 import NumberWaterInlets from './NumberWaterInlets'
-import Kitchen from './choiceOfOptions/Kitchen'
-import Hall from './choiceOfOptions/Hall'
-import Toilet from './choiceOfOptions/Toilet'
-import Room from './choiceOfOptions/Room'
+import Kitchen from './Rooms/Kitchen'
+import Hall from './Rooms/Hall'
+import Toilet from './Rooms/Toilet'
+import Room from './Rooms/Room'
 
 const createArray = (N) => Array.from({length: N}, (v, k) => k+1);
 const roomOptions = {
-    control_temp: 0,
+    control_temp_heating: 0,
+    control_temp_floor: 0,
     management_light: 0,
     management_socket: 0,
     management_curtain: 0,
@@ -19,14 +20,14 @@ const roomOptions = {
     control_water: 0,
 }
 
-class AllRooms extends Component {
+class App extends Component {
 
     constructor(props){
         super(props);
 
         this.state = {
             counter: 0,
-            isDisplayForm: true,
+            isDisplayLastForm: true,
             flatInfo:{  
                 room_count: 1,
                 toilet_count: 1,
@@ -40,10 +41,10 @@ class AllRooms extends Component {
     }
 
     handlerAPI(){
-        this.setState({isDisplayForm: null})
-
+        this.setState({isDisplayLastForm: null});
+        
         var data = new FormData();
-        data.append( "json", JSON.stringify( this.state.flatInfo ) );
+        data.append( "json", JSON.stringify([this.state.flatInfo]) );
 
         fetch("https://pro100.media/api/calc/frame/",
         {
@@ -170,7 +171,7 @@ class AllRooms extends Component {
             <div className="wrapper">
                 <div className="main">
 
-                { this.state.isDisplayForm && allFormComponents[this.state.counter] }
+                { this.state.isDisplayLastForm && allFormComponents[this.state.counter] }
 
                 {  
                     this.state.response && 
@@ -185,4 +186,4 @@ class AllRooms extends Component {
   
 }
 
-export default AllRooms;
+export default App;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Options = ({getOptions, componentName})=>
+const Options = ({getOptions, componentName, isDisplayExtraOption})=>
     <form>
         <fieldset className="form-group">
 
@@ -16,7 +16,7 @@ const Options = ({getOptions, componentName})=>
 
             <div className="form-check form-check-inline">
                 <input className="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2"
-                onChange={(e)=>getOptions(e,componentName, "control_temp2")} 
+                onChange={(e)=>getOptions(e, componentName, "control_temp_heating")} 
                 />
                 <label className="form-check-label" htmlFor="inlineCheckbox2">Отопление</label>
             </div>
@@ -34,7 +34,7 @@ const Options = ({getOptions, componentName})=>
 
         <div className="form-check">
             <input className="form-check-input" type="checkbox" value="" id="defaultCheck2" 
-            onChange={(e)=>getOptions(e,componentName, "management_socket")} 
+            onChange={(e)=>getOptions(e, componentName, "management_socket")} 
             />
             <label className="form-check-label" htmlFor="defaultCheck2">
             Управление розетками
@@ -43,7 +43,7 @@ const Options = ({getOptions, componentName})=>
 
         <div className="form-check">
             <input className="form-check-input" type="checkbox" value="" id="defaultCheck3" 
-            onChange={(e)=>getOptions(e,componentName, "management_curtain")} 
+            onChange={(e)=>getOptions(e, componentName, "management_curtain")} 
             />
             <label className="form-check-label" htmlFor="defaultCheck3">
             Управление занавесками
@@ -52,7 +52,7 @@ const Options = ({getOptions, componentName})=>
 
         <div className="form-check">
             <input className="form-check-input" type="checkbox" value="" id="defaultCheck4" 
-            onChange={(e)=>getOptions(e,componentName, "control_multi")} 
+            onChange={(e)=>getOptions(e, componentName, "control_multi")} 
             />
             <label className="form-check-label" htmlFor="defaultCheck4">
             Мониторинг температуры/движения/влажности
@@ -61,7 +61,7 @@ const Options = ({getOptions, componentName})=>
 
         <div className="form-check">
             <input className="form-check-input" type="checkbox" value="" id="defaultCheck5" 
-            onChange={(e)=>getOptions(e,componentName, "control_air")} 
+            onChange={(e)=>getOptions(e, componentName, "control_air")} 
                 />
             <label className="form-check-label" htmlFor="defaultCheck5">
             Мониторинг качества воздуха
@@ -70,21 +70,24 @@ const Options = ({getOptions, componentName})=>
 
         <div className="form-check">
             <input className="form-check-input" type="checkbox" value="" id="defaultCheck6" 
-            onChange={(e)=>getOptions(e,componentName, "management_water")} 
+            onChange={(e)=>getOptions(e, componentName, "management_water")} 
             />
             <label className="form-check-label" htmlFor="defaultCheck6">
             Управление водой(перекрытие  в  лучае аварии)
             </label>
         </div>
 
-        <div className="form-check">
-            <input className="form-check-input" type="checkbox" value="" id="defaultCheck7" 
-            onChange={(e)=>getOptions(e,componentName, "control_water")} 
-            />
-            <label className="form-check-label" htmlFor="defaultCheck7">
-            Контроль протечки
-            </label>
-        </div>
+        {  
+            isDisplayExtraOption &&
+            <div className="form-check">
+                <input className="form-check-input" type="checkbox" value="" id="defaultCheck7" 
+                onChange={(e)=>getOptions(e, componentName, "control_water")} 
+                />
+                <label className="form-check-label" htmlFor="defaultCheck7">
+                Контроль протечки
+                </label>
+            </div>
+        }
         
     </form>
   
