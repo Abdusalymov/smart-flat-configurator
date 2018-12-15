@@ -59,16 +59,15 @@ class App extends Component {
                     ...flatInfo, 
                     [typeOfRoom]: {
                         
-                        ...typeOfRoom,
+                        ...flatInfo[typeOfRoom],
                         [managementOption]: 1,
                     }     
                 }
             });
 
         }else{
-            let copyRoomOptions = {...RoomOptions};
+            const copyRoomOptions = {...RoomOptions};
             copyRoomOptions[managementOption] = 1;
-
             this.setState({ 
                 flatInfo:{
                     ...flatInfo,
@@ -90,7 +89,7 @@ class App extends Component {
 
                     ...this.state.flatInfo,
                     [typeOfRoom]: {
-                        ...typeOfRoom,
+                        ...this.state.flatInfo[typeOfRoom],
                         [managementOption]: 0,
                     }
                 } 
@@ -113,24 +112,15 @@ class App extends Component {
     }
 
     render() {
-
         const {room_count, toilet_count} = this.state.flatInfo;
 
         const entryNumbers = (
-            <form onSubmit={this.handlSubmit}>
-                <NumberRooms
-                    onChange={this.setRoomsCount}
-                />
-                <NumberBathrooms
-                    onChange={this.setRoomsCount}
-                />
-                <NumberWaterInlets
-                    onChange={this.setRoomsCount}
-                />
-                <button onClick={this.nextForm}>
-                    Сохранить
-                </button>
-            </form>
+            <div>
+                <NumberRooms onChange={this.setRoomsCount}/>
+                <NumberBathrooms onChange={this.setRoomsCount}/>
+                <NumberWaterInlets onChange={this.setRoomsCount}/>
+                <button onClick={this.nextForm}>Сохранить</button>
+            </div>
         );
 
         const toilets = createArray(toilet_count).map((item)=>{
@@ -156,9 +146,19 @@ class App extends Component {
             number={item} />
         });
 
-        const hall = (<Hall getOptions={this.getFormOptions} nextRoom={this.nextForm} />);
-        const kitchen = (<Kitchen getOptions={this.getFormOptions} nextRoom={this.nextForm}/>);
-        const allFormComponents = [entryNumbers, kitchen, hall,...toilets,...rooms];
+        const hall = (
+            <Hall getOptions={this.getFormOptions} nextRoom={this.nextForm} />
+        );
+        const kitchen = (
+            <Kitchen getOptions={this.getFormOptions} nextRoom={this.nextForm}/>
+        );
+        const allFormComponents = [
+            entryNumbers, 
+            kitchen, 
+            hall,
+            ...toilets,
+            ...rooms
+        ];
 
         return (
             <div style={Wrapper}>

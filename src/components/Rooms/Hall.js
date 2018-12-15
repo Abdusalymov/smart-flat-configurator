@@ -1,13 +1,11 @@
 import React from 'react';
-import Options from '../Options/OptionsForm';
+import OptionsForm from '../Options/OptionsForm';
 
 const Hall = ({nextRoom, getOptions})=>
     <div>
         <h4>Выберите опции для коридора</h4>
-        <Options getOptions={getOptions} componentName={'hall'}/>
-        <button onClick={nextRoom}>
-            Сохранить
-        </button>
+        <OptionsForm getOptions={getOptions} componentName={"hall"}/>
+        <button onClick={nextRoom}>Сохранить</button>
     </div>
 
 
