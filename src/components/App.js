@@ -6,19 +6,12 @@ import Kitchen from './Rooms/Kitchen'
 import Hall from './Rooms/Hall'
 import Toilet from './Rooms/Toilet'
 import Room from './Rooms/Room'
+import Wrapper from './Style/Wrapper'
+import RoomOptions from './Options/RoomOptions'
+
+
 
 const createArray = (N) => Array.from({length: N}, (v, k) => k+1);
-const roomOptions = {
-    control_temp_heating: 0,
-    control_temp_floor: 0,
-    management_light: 0,
-    management_socket: 0,
-    management_curtain: 0,
-    control_multi: 0,
-    control_air: 0,
-    management_water: 0,
-    control_water: 0,
-}
 
 class App extends Component {
 
@@ -73,7 +66,7 @@ class App extends Component {
             });
 
         }else{
-            let copyRoomOptions = {...roomOptions};
+            let copyRoomOptions = {...RoomOptions};
             copyRoomOptions[managementOption] = 1;
 
             this.setState({ 
@@ -168,17 +161,16 @@ class App extends Component {
         const allFormComponents = [entryNumbers, kitchen, hall,...toilets,...rooms];
 
         return (
-            <div className="wrapper">
-                <div className="main">
-
-                { this.state.isDisplayLastForm && allFormComponents[this.state.counter] }
+            <div style={Wrapper}>
+                { 
+                    this.state.isDisplayLastForm && 
+                    allFormComponents[this.state.counter] 
+                }
 
                 {  
                     this.state.response && 
                     <div dangerouslySetInnerHTML={{ __html: this.state.response }} /> 
                 }
-                   
-                </div>
             </div>
             
         )

@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Options = ({getOptions, componentName, isDisplayExtraOption})=>
-    <form>
+const OptionsForm = ({getOptions, componentName, isDisplayExtraOption})=>
+    <div>
         <fieldset className="form-group">
 
             <h6>Управление температурным режимом:</h6>
@@ -88,9 +88,6 @@ const Options = ({getOptions, componentName, isDisplayExtraOption})=>
                 </label>
             </div>
         }
+    </div>
         
-    </form>
-  
-
-
-export default Options;  
+export default OptionsForm;  

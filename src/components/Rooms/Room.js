@@ -1,5 +1,5 @@
 import React from 'react';
-import Options from '../Options';
+import Options from '../Options/OptionsForm';
 
 const Room = ({ nextRoom, number, getOptions })=>
     <div>
